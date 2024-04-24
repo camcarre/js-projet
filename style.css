@@ -1,0 +1,104 @@
+.logo {
+    display: inline-block;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+}
+
+nav {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 70%;
+}
+
+.nav-links li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #333;
+    padding: 5px;
+}
+
+.nav-links li a:hover {
+    color: turquoise;
+}
+
+.photo-container {
+    background-color: rgb(70, 112, 172);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 400px;
+}
+
+.text-overlay {
+
+    font-family: "Sedan", serif;
+    font-weight: 400;
+    font-style: normal;
+    position: relative;
+    color: white;
+    text-align: left; /* Changez cette ligne pour aligner le texte à gauche */
+    padding: 20px;
+    font-size: 10px;
+    margin-left: 50px;
+}
+
+.logocarrebleu {
+    margin-left: 25px;
+    height: 40%;
+    width: auto;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    border-radius: 10px;
+    transition: all 5s ease;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+}
+
+.text-overlay2 {
+    position: relative;
+    color: black;
+    text-align: left;
+    padding: 20px;
+    font-size: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    font-family: "Sedan", serif;
+    font-weight: 400;
+    font-style: normal;
+}
