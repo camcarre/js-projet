@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+
+.card {
+    width: 200px;
+    height: 300px;
+    perspective: 1000px;
+    margin: 5px;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    background-color: #bbb;
+    color: black;
+}
+
+.card-back {
+    background-color: #2980b9;
+    color: white;
+    transform: rotateY(180deg);
+}
+
+#displayContainer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+#playerButtons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+    margin-bottom: 20px;
+}
+
+
+</style>
+
+<body>
+    <label for="numPlayers">Nombre de joueurs :</label>
+    <input type="number" id="numPlayers" min="4" value="4">
+    
+    <label for="numMisterWhite">Nombre de Mister White :</label>
+    <input type="number" id="numMisterWhite" min="0" value="1">
+    
+    <label for="numUndercover">Nombre de Undercover :</label>
+    <input type="number" id="numUndercover" min="0" value="1">
+    
+    <button id="startGameButton" onclick="startGame()">Commencer le jeu</button>    
+    <div id="playerButtons"></div>
+
+    <div id="displayContainer">
+        <p id="displayNumPlayers"></p>
+        <p id="displayNumMisterWhite"></p>
+        <p id="displayNumUndercover"></p>
+    </div>
+    <button id="allCardsClicked" style="display: none;">Toutes les cartes ont été cliquées</button>
+    <script>
+    function startGame() {
+        var numPlayers = document.getElementById("numPlayers").value;
+        var numMisterWhite = document.getElementById("numMisterWhite").value;
+        var numUndercover = document.getElementById("numUndercover").value;
+
+        if ((parseInt(numMisterWhite) + parseInt(numUndercover)) > numPlayers / 2) {
+            alert("Il y a trop de rôles spéciaux. Le nombre total de 'Undercover' et 'Mister White' ne doit pas dépasser la moitié du nombre de joueurs.");
+            return;
+        }
+
+        document.getElementById("startGameButton").style.display = 'none';
+        document.getElementById("numPlayers").style.display = 'none';
+        document.getElementById("numMisterWhite").style.display = 'none';
+        document.getElementById("numUndercover").style.display = 'none';
+
+        var labels = document.querySelectorAll('label[for=numPlayers], label[for=numMisterWhite], label[for=numUndercover]');
+        for(var i = 0; i < labels.length; i++) {
+            labels[i].style.display = 'none';
+        }
+
+        var displayNumPlayers = document.getElementById("displayNumPlayers");
+        var displayNumMisterWhite = document.getElementById("displayNumMisterWhite");
+        var displayNumUndercover = document.getElementById("displayNumUndercover");
+
+        displayNumPlayers.textContent = "Nombre de joueurs : " + numPlayers;
+        displayNumMisterWhite.textContent = "Nombre de Mister White : " + numMisterWhite;
+        displayNumUndercover.textContent = "Nombre de Undercover : " + numUndercover;
+
+        var pseudos = [];
+        for (var i = 0; i < numPlayers; i++) {
+            var pseudo = prompt("Entrez le pseudonyme du joueur " + (i + 1) + " :");
+            pseudos.push(pseudo);
+        }
+
+        var undercoverWords = ["1", "2"];
+        var basicWords = ["1", "2"];
+        var cards = [];
+
+        for (var i = 0; i < numUndercover; i++) {
+            cards.push({role: "Undercover", word: undercoverWords[i]});
+        }
+        while (cards.length < pseudos.length - numMisterWhite) {
+            cards.push({role: "Basique", word: basicWords[cards.length - numUndercover]});
+        }
+        for (var i = 0; i < numMisterWhite; i++) {
+            cards.push({role: "Mister White"});
+        }
+
+        var playerButtons = document.getElementById("playerButtons");
+
+        for (var i = 0; i < pseudos.length; i++) {
+            var card = document.createElement("div");
+            card.className = "card";
+
+            var cardInner = document.createElement("div");
+            cardInner.className = "card-inner";
+
+            var cardFront = document.createElement("div");
+            cardFront.className = "card-front";
+            cardFront.textContent = "Voir le rôle de " + pseudos[i];
+
+            var cardBack = document.createElement("div");
+            cardBack.className = "card-back";
+            cardBack.textContent = "Le rôle du joueur " + pseudos[i] + " est " + cards[i].role + " et son mot est " + cards[i].word;
+
+            cardInner.onclick = (function(cardInner, cardBack) {
+                return function() {
+                    cardInner.style.transform = "rotateY(180deg)";
+                    cardBack.style.display = 'none'; 
+                };
+            })(cardInner, cardBack);
+
+            cardInner.appendChild(cardFront);
+            cardInner.appendChild(cardBack);
+            card.appendChild(cardInner);
+            playerButtons.appendChild(card);
+        }
+    }
+        
+
+    
+    </script>
+</body>
+</html>
