@@ -13,6 +13,7 @@ app.use(async (context, next) => {
   }
 });
 
+<<<<<<< HEAD
 app.use(async (context, next) => {
   const filePath = context.request.url.pathname;
   const fileWhitelist = [
@@ -47,4 +48,16 @@ app.addEventListener("listen", ({ hostname, port, secure }) => {
 });
 
 await app.listen({ port: 8000 });
+=======
+const PORT = 3000;
+console.log(`Server is running on port ${PORT}`);
+await app.listen({ port: PORT });
+
+
+
+
+
+
+
+>>>>>>> theod
 
