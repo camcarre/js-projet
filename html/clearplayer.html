@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Player</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<style>
+
+    .card {
+        width: 200px;
+        height: 300px;
+        perspective: 1000px;
+        margin: 5px;
+    }
+    
+    .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+    }
+    
+    .card:hover .card-inner {
+        transform: rotateY(180deg);
+    }
+    
+    .card-front, .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+    
+    .card-front {
+        background-color: #bbb;
+        color: black;
+    }
+    
+    .card-back {
+        background-color: #2980b9;
+        color: white;
+        transform: rotateY(180deg);
+    }
+    
+    #displayContainer {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+    
+    #playerButtons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 50px;
+        margin-bottom: 20px;
+    }
+    
+    
+    </style>
+<body>
+    <h1>Welcome to Clear Player</h1>
+    
+    <div id="cards"></div>
+
+    <script>
+        // Utilisez AJAX pour charger les cartes de jeux.html
+        $.get('jeux.html', function(data) {
+            // Parsez les données HTML
+            var html = $.parseHTML(data);
+
+            // Obtenez les cartes à partir des données HTML
+            var cards = $(html).find('.card');
+
+            // Ajoutez chaque carte à l'élément de cartes
+            cards.each(function() {
+                $('#cards').append(this);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+
