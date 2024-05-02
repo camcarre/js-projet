@@ -7,11 +7,12 @@ h2{
     margin: 30px;
 }
 
-.jersey-10 charted-regular {
-    font-family: "Jersey 10 Charted", sans-serif;
-    font-weight: 400;
+h3 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
     font-style: normal;
-  }
+}  
 
   .button {
       position: relative;

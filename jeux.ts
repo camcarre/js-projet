@@ -1,4 +1,7 @@
-class Player {
+import { UndercoverGame } from './undercover';
+
+
+export class Player {
     private _pseudo: string;
 
     constructor(pseudo: string) {
@@ -10,7 +13,7 @@ class Player {
     }
 }
 
-class Card {
+export class Card {
     private _role: string;
     private _word?: string;
 
@@ -28,7 +31,7 @@ class Card {
     }
 }
 
-class Game {
+export class Game {
     private _numPlayers: number;
     private _numMisterWhite: number;
     private _numUndercover: number;
@@ -125,7 +128,23 @@ function startGame() {
     const pseudos: string[] = [];
     
     const numPlayers = parseInt(numPlayersInput.value);
+    const numMisterWhite = parseInt(numMisterWhiteInput.value);
+    const numUndercover = parseInt(numUndercoverInput.value);
+
+    // Création de l'instance de Game
+    const game = new Game(numPlayers, numMisterWhite, numUndercover);
+    
+    // Initialisation du jeu
+    game.initializeGame(pseudos);
+    
+    // Création de l'instance de UndercoverGame
+    const undercoverGame = new UndercoverGame(game);
+
+    // D'autres actions ou manipulations peuvent suivre ici...
 }
+
+
+
 
 
 
