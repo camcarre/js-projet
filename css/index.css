@@ -1,6 +1,10 @@
 h1{
-    color: #9e2383;
+    color: #000000;
     margin: 30px;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
 }
 h2{
     color: #0667dd;
@@ -16,7 +20,13 @@ h3{
 h4{
     color: #0667dd;
     margin: 30px;
-    
+}
+
+.titre{
+  font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
 }
 
 .jersey-10 charted-regular {
@@ -93,6 +103,7 @@ nav {
     margin-left: 25px;
     height: 40%;
     width: auto;
+    border-radius: 20px;
 }
 
 .dropdown {

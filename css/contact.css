@@ -1,6 +1,10 @@
 h1{
     color: blueviolet;
     margin-bottom: 200px;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
 }
 .social {
     margin: 0;
