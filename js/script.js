@@ -100,4 +100,45 @@ function startGame() {
     allCardsClickedButton.addEventListener('click', function() {
         window.location.href = 'clearplayer.html';
     });
+
+    window.onload = function() {
+
+        var cards = JSON.parse(localStorage.getItem('cards'));
+
+        var cardsElement = document.getElementById('cards');
+
+        for (var i = 0; i < cards.length; i++) {
+            var cardElement = document.createElement('div');
+            cardElement.className = 'card';
+
+            var cardInnerElement = document.createElement('div');
+            cardInnerElement.className = 'card-inner';
+
+            var cardFrontElement = document.createElement('div');
+            cardFrontElement.className = 'card-front';
+            cardFrontElement.textContent = 'Cliquez pour révéler le rôle';
+
+            var cardBackElement = document.createElement('div');
+            cardBackElement.className = 'card-back';
+            cardBackElement.textContent = 'Le rôle est ' + cards[i].role + ' et le mot est ' + cards[i].word;
+
+            cardInnerElement.appendChild(cardFrontElement);
+            cardInnerElement.appendChild(cardBackElement);
+
+            cardElement.appendChild(cardInnerElement);
+
+            var button = document.createElement('button');
+            button.textContent = 'Éliminer le joueur';
+            button.onclick = (function(cardElement, card) {
+                return function() {
+                    alert('Le joueur a été éliminé. Son rôle était ' + card.role);
+                    cardElement.style.display = 'none';
+                };
+            })(cardElement, cards[i]);
+
+            cardElement.appendChild(button);
+
+            cardsElement.appendChild(cardElement);
+        }
+    }
 }
