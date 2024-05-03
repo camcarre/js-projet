@@ -1,6 +1,3 @@
-import { UndercoverGame } from './undercover';
-
-
 export class Player {
     private _pseudo: string;
 
