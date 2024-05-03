@@ -83,7 +83,7 @@ nav {
     font-style: normal;
     position: relative;
     color: white;
-    text-align: left; /* Changez cette ligne pour aligner le texte à gauche */
+    text-align: left;
     padding: 20px;
     font-size: 10px;
     margin-left: 50px;

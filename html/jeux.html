@@ -3,7 +3,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="/css/jeux.css">
-    <script src="/script.js"></script>
+    <script src="/js/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
@@ -17,7 +17,7 @@
     <label for="numUndercover">Nombre de Undercover :</label>
     <input type="number" id="numUndercover" min="0" value="1">
     
-    <button id="startGameButton">Commencer le jeu</button>    
+    <button id="startGameButton" onclick="startGame()">Commencer le jeu</button>
     <div id="playerButtons"></div>
 
     <div id="displayContainer">
@@ -29,4 +29,8 @@
     
 </body>
 
+
+
 </html>
+
+
