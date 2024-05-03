@@ -1,5 +1,5 @@
 h2{
-    color: blueviolet;
+    color: beige;
     margin: 30px;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
@@ -48,3 +48,9 @@ h3 {
       box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
       transform: translate(0.1em, 0.1em);
   }
+
+  .rules-background {
+    background-color: beige; 
+    padding: 20px; 
+    border-radius: 10px; 
+}
