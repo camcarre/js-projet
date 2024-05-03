@@ -7,7 +7,7 @@ h1{
     font-style: normal;
 }
 h2{
-    color: #0667dd;
+    color: #ece4a1;
     margin: 30px;
 }
 
@@ -73,11 +73,11 @@ nav {
 }
 
 .nav-links li a:hover {
-    color: turquoise;
+    color: beige;
 }
 
 .photo-container {
-    background-color: rgb(70, 112, 172);
+    background-color: beige;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -241,4 +241,42 @@ ul {
   .example-2 .icon-content a[data-social="youtube"] ~ .tooltip {
     background-color: #ff0000;
   }
+
+  button {
+    position: relative;
+    background-color: beige;
+    border-radius: 5px;
+    box-shadow: rgb(255, 255, 23);
+    padding: 15px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    box-sizing: border-box;
+    width: 154px;
+    height: 49px;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+    overflow: hidden;
+    margin-left: 750px
+  }
+  
+  button::before {
+    content: "";
+    background-color: beige;
+    width: 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: width 700ms ease-in-out;
+    display: inline-block;
+  }
+  
+  button:hover::before {
+    width: 100%;
+  }
+  
   
