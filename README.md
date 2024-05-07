@@ -10,3 +10,7 @@ Pour réaliser notre jeux nous ferons également du typescript et nous utilisero
 
 Nous allons nous répartir les tâche en travaillant chacun sur nos branche grâce à git.
 
+Ici nous avons nos fichiers html avec un css pour chaque page html? nous avons importé les images nécessaires. Le server fonctionne avec les packages json nécessaires et nous avons bien évidemment l'essentiel du jeux codé en javascript, typescript.
+
+Pour lancer le jeux il suffie de faire la commande "npm start server.ts" qui lance le fichier server.ts qui lance le jeux.
+
