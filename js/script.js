@@ -1,144 +1,144 @@
-function startGame() {
-    var numPlayers = document.getElementById("numPlayers").value;
-    var numMisterWhite = document.getElementById("numMisterWhite").value;
-    var numUndercover = document.getElementById("numUndercover").value;
+const player = {
+    host: false,
+    playedCell: "",
+    roomId: null,
+    username: "",
+    socketId: "",
+    symbol: "X",
+    turn: false,
+    win: false
+};
 
-    if ((parseInt(numMisterWhite) + parseInt(numUndercover)) > numPlayers / 2) {
-        alert("Il y a trop de rôles spéciaux. Le nombre total de 'Undercover' et 'Mister White' ne doit pas dépasser la moitié du nombre de joueurs.");
-        return;
-    }
+const socket = io();
 
-    document.getElementById("startGameButton").style.display = 'none';
-    document.getElementById("numPlayers").style.display = 'none';
-    document.getElementById("numMisterWhite").style.display = 'none';
-    document.getElementById("numUndercover").style.display = 'none';
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const roomId = urlParams.get('room');
 
-    var labels = document.querySelectorAll('label[for=numPlayers], label[for=numMisterWhite], label[for=numUndercover]');
-    for(var i = 0; i < labels.length; i++) {
-        labels[i].style.display = 'none';
-    }
+if (roomId) {
+    document.getElementById('start').innerText = "Rejoindre";
+}
 
-    var displayNumPlayers = document.getElementById("displayNumPlayers");
-    var displayNumMisterWhite = document.getElementById("displayNumMisterWhite");
-    var displayNumUndercover = document.getElementById("displayNumUndercover");
+const usernameInput = document.getElementById('username');
 
-    displayNumPlayers.textContent = "Nombre de joueurs : " + numPlayers;
-    displayNumMisterWhite.textContent = "Nombre de Mister White : " + numMisterWhite;
-    displayNumUndercover.textContent = "Nombre de Undercover : " + numUndercover;
+const gameCard = document.getElementById('game-card');
+const userCard = document.getElementById('user-card');
 
-    var pseudos = [];
-    for (var i = 0; i < numPlayers; i++) {
-        var pseudo = prompt("Entrez le pseudonyme du joueur " + (i + 1) + " :");
-        pseudos.push(pseudo);
-    }
+const restartArea = document.getElementById('restart-area');
+const waitingArea = document.getElementById('waiting-area');
 
-    var undercoverWords = ["1", "2"];
-    var basicWords = ["1", "2"];
-    var cards = [];
+const roomsCard = document.getElementById('rooms-card');
+const roomsList = document.getElementById('rooms-list');
 
-    for (var i = 0; i < numUndercover; i++) {
-        cards.push({role: "Undercover", word: undercoverWords[i]});
-    }
-    while (cards.length < pseudos.length - numMisterWhite) {
-        cards.push({role: "Basique", word: basicWords[cards.length - numUndercover]});
-    }
-    for (var i = 0; i < numMisterWhite; i++) {
-        cards.push({role: "Mister White"});
-    }
+const turnMsg = document.getElementById('turn-message');
+const linkToShare = document.getElementById('link-to-share');
 
-    localStorage.setItem('cards', JSON.stringify(cards));
+let ennemyUsername = "";
 
-    var playerButtons = document.getElementById("playerButtons");
+socket.emit('get rooms');
+socket.on('list rooms', (rooms) => {
+    let html = "";
 
-    for (var i = 0; i < pseudos.length; i++) {
-        var card = document.createElement("div");
-        card.className = "card";
-
-        var cardInner = document.createElement("div");
-        cardInner.className = "card-inner";
-
-        var cardFront = document.createElement("div");
-        cardFront.className = "card-front";
-        cardFront.textContent = "Voir le rôle de " + pseudos[i];
-
-        var cardBack = document.createElement("div");
-        cardBack.className = "card-back";
-        cardBack.textContent = "Le rôle du joueur " + pseudos[i] + " est " + cards[i].role + " et son mot est " + cards[i].word;
-
-        cardInner.onclick = (function(cardInner, cardBack) {
-            return function() {
-                cardInner.style.transform = "rotateY(180deg)";
-                cardBack.style.display = 'none'; 
-            };
-        })(cardInner, cardBack);
-
-        cardInner.appendChild(cardFront);
-        cardInner.appendChild(cardBack);
-        card.appendChild(cardInner);
-        playerButtons.appendChild(card);
-    }
-
-    var cards = document.querySelectorAll('.card');
-    var allCardsClickedButton = document.getElementById('allCardsClicked');
-
-    var flippedCards = 0;
-
-    cards.forEach(function(card) {
-        card.addEventListener('click', function() {
-            if (!card.classList.contains('flipped')) {
-                card.classList.add('flipped');
-
-                flippedCards++;
-
-                if (flippedCards === cards.length) {
-                    allCardsClickedButton.style.display = 'block';
-                }
+    if (rooms.length > 0) {
+        rooms.forEach(room => {
+            if (room.players.length !== 4) {
+                html += `<li class="list-group-item d-flex justify-content-between">
+                            <p class="p-0 m-0 flex-grow-1 fw-bold">Salon de ${room.players[0].username} - ${room.id}</p>
+                            <button class="btn btn-sm btn-success join-room" data-room="${room.id}">Rejoindre</button>
+                        </li>`;
             }
         });
-    });
+    }
 
-    allCardsClickedButton.addEventListener('click', function() {
-        window.location.href = 'clearplayer.html';
-    });
+    if (html !== "") {
+        roomsCard.classList.remove('d-none');
+        roomsList.innerHTML = html;
 
-    window.onload = function() {
+        for (const element of document.getElementsByClassName('join-room')) {
+            element.addEventListener('click', joinRoom, false)
+        }
+    }
+});
 
-        var cards = JSON.parse(localStorage.getItem('cards'));
+$("#form").on('submit', function (e) {
+    e.preventDefault();
 
-        var cardsElement = document.getElementById('cards');
+    player.username = usernameInput.value;
 
-        for (var i = 0; i < cards.length; i++) {
-            var cardElement = document.createElement('div');
-            cardElement.className = 'card';
+    if (roomId) {
+        player.roomId = roomId;
+    } else {
+        player.host = true;
+        player.turn = true;
+    }
 
-            var cardInnerElement = document.createElement('div');
-            cardInnerElement.className = 'card-inner';
+    player.socketId = socket.id;
 
-            var cardFrontElement = document.createElement('div');
-            cardFrontElement.className = 'card-front';
-            cardFrontElement.textContent = 'Cliquez pour révéler le rôle';
+    userCard.hidden = true;
+    waitingArea.classList.remove('d-none');
+    roomsCard.classList.add('d-none');
 
-            var cardBackElement = document.createElement('div');
-            cardBackElement.className = 'card-back';
-            cardBackElement.textContent = 'Le rôle est ' + cards[i].role + ' et le mot est ' + cards[i].word;
+    socket.emit('playerData', player);
+});
 
-            cardInnerElement.appendChild(cardFrontElement);
-            cardInnerElement.appendChild(cardBackElement);
+$(".cell").on("click", function (e) {
+    const playedCell = this.getAttribute('id');
 
-            cardElement.appendChild(cardInnerElement);
+    if (this.innerText === "" && player.turn) {
+        player.playedCell = playedCell;
 
-            var button = document.createElement('button');
-            button.textContent = 'Éliminer le joueur';
-            button.onclick = (function(cardElement, card) {
-                return function() {
-                    alert('Le joueur a été éliminé. Son rôle était ' + card.role);
-                    cardElement.style.display = 'none';
-                };
-            })(cardElement, cards[i]);
+        this.innerText = player.symbol;
 
-            cardElement.appendChild(button);
+        player.win = calculateWin(playedCell);
+        player.turn = false;
 
-            cardsElement.appendChild(cardElement);
+        socket.emit('play', player);
+    }
+});
+
+$("#restart").on('click', function () {
+    restartGame();
+})
+
+socket.on('join room', (roomId) => {
+    player.roomId = roomId;
+    linkToShare.innerHTML = `<a href="${window.location.href}?room=${player.roomId}" target="_blank">${window.location.href}?room=${player.roomId}</a>`;
+});
+
+
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const roles = ['Undercover', 'Mister White', 'Villageois', 'Villageois'];
+
+const words = {
+'words': [
+    ["Chien", "Chat", ], ["Oiseau", "Renard", ], ["Lapin", "Souris", ], ["Tortue", "Hibou", ], ["Papillon", "Faucon", ],
+    ["Pizza", "Frites", ], ["Sushi", "Salade", ], ["Pain", "Banane", ], ["Pomme", "Chocolat", ], ["Gâteau", "Café", ],
+    ["Plage", "Ville", ], ["Désert", "Île", ], ["Train", "Bus", ], ["Europe", "Amérique", ], ["Australie", "Lune", ],
+    ["Football", "Tennis", ], ["Natation", "Course", ], ["Boxe", "Escalade", ], ["Surf", "Hockey", ], ["Baseball", "Volleyball",]
+],
+
+}
+const wordList = words.words;
+
+function assignWords(players, roles, words) {
+    // Mélangez la liste de mots
+    shuffle(words);
+
+    for (let i = 0; i < players.length; i++) {
+        players[i].role = roles[i];
+        if (players[i].role === 'Villageois') {
+            players[i].word = words[0][0]; // Premier mot du premier tableau
+        } else if (players[i].role === 'Undercover') {
+            players[i].word = words[0][1]; // Deuxième mot du premier tableau
+        } else if (players[i].role === 'Mister White') {
+            players[i].word = 'mister white'; // Mot pour Mister White
         }
     }
 }
