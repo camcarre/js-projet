@@ -1,5 +1,5 @@
 .board {
-    background-color: gainsboro;
+    background-color: beige;
 }
 
 .cell {
@@ -8,15 +8,16 @@
     height: 150px;
     text-align: center;
     width: 150px;
+    background-color: beige;
 }
 
 .cell:hover {
     cursor: pointer;
-    background-color: rgb(192, 191, 191);
+    background-color: beige;
 }
 
 .cell:active {
-    background-color: rgb(155, 154, 154);
+    background-color: beige;
 }
 
 .win-cell {
@@ -51,12 +52,79 @@
 }
 
 .flip-card-front {
-    background-color: #bbb;
-    color: black;
+    background-color: black;
+    color: white;
+    border-radius: 20px;
 }
 
 .flip-card-back {
-    background-color: #2980b9;
+    background-color: beige;
     color: white;
     transform: rotateY(180deg);
+    border-radius: 20px;
+}
+
+.form-label{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+.game-card{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    border-radius: 20px;
+}
+
+.btn-primary{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    background-color: beige;
+    color: black;
+    border-color: beige;
+    border-radius: 10px;
+    margin-left: 200px;
+}
+
+.btn-primary:hover{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    background-color: beige;
+    color: black;
+    border-color: beige;
+    border-radius: 10px;
+}
+
+.card-header{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    background-color: beige;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: 20px;
+}
+
+.btn{
+ background-color: beige;
+ border: beige;
+ color:black;
+}
+
+.btn:hover{
+    background-color: beige;
+    border: beige;
+    color:black;
 }
