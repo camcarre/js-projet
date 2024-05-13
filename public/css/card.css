@@ -1,0 +1,100 @@
+h1{
+    color: blueviolet;
+    margin: 30px;
+}
+h2{
+    color: blueviolet;
+    margin: 30px;
+}
+
+.jersey-10 charted-regular {
+    font-family: "Jersey 10 Charted", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .button {
+      position: relative;
+      font-size: 1.2em;
+      padding: 0.7em 1.4em;
+      background-color: #0667dd;
+      text-decoration: none;
+      border: none;
+      border-radius: 0.5em;
+      color: #DEDEDE;
+      box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.3);
+  }
+  
+  .button::before {
+      position: absolute;
+      content: '';
+      height: 0;
+      width: 0;
+      top: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(33,33,33,1) 0%, rgba(33,33,33,1) 50%, rgba(#ffffff) 50%, rgba(#ffffff) 60%);
+      border-radius: 0 0 0.5em 0;
+      box-shadow: 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.3);
+      transition: 0.3s;
+  }
+  
+  .button:hover::before {
+      width: 1.6em;
+      height: 1.6em;
+  }
+  
+  .button:active {
+      box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
+      transform: translate(0.1em, 0.1em);
+  }
+
+  .card {
+    width: 200px;
+    height: 300px;
+    perspective: 1000px;
+    margin: 5px;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    background-color: #bbb;
+    color: black;
+}
+
+.card-back {
+    background-color: #2980b9;
+    color: white;
+    transform: rotateY(180deg);
+}
+
+#displayContainer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+#playerButtons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+    margin-bottom: 20px;
+}

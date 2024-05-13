@@ -1,12 +1,38 @@
-Projet en Java-Script
+# Tic Tac Toe
 
-Le but de notre projet est de réaliser un jeux nommé Undercover, il existe en appliaction sur smartphone mais le but ici est de le réaliser sur pc en réseaux avec le nombre de joueurs que l'ont souahite dans un maximum de 8 personnes.
-Les règles sont simples, des mots sont attribué aux joueurs et un possède le mauvais et le but est de le découvrir pendant la partie en utilisant a tours de rôle des synonyme du mots que l'ont possède. 
+Dépôt pour la vidéo YouTube [Créer un jeu de morpion multijoueur avec Node.JS, Socket.IO et Bootstrap 5](https://www.youtube.com/watch?v=Mct3TqiCxLY)
 
-Nous allons principalement ici utilisé le langague typescript.
+## Fonctionnalités
 
-Pour cela nous allons faire un serveur en typescript avec bien évidemment nos fichier html et un fichier css.
-Pour réaliser notre jeux nous ferons également du typescript et nous utiliserons sans doute un fichier json pour avoir nos listes de mots nécessaires au fonctionnement du jeux.
+- Jeu de morpion à 2 joueurs
+- Système de salons
+- Système d'invitation
+- Possibilité de rejouer avec le même adversaire
 
-Nous allons nous répartir les tâche en travaillant chacun sur nos branche grâce à git.
+## Technologies
 
+- [Node.JS]
+- [Visual Studio Code ]
+- [Bootstrap 5]
+- [jQuery]
+- [Express JS]
+
+## Installation
+
+[Node.js](https://nodejs.org/) est requis pour pouvoir exécuter cette application
+
+```sh
+npm install
+```
+
+#### Exécuter l'application web
+
+```sh
+npm run start
+```
+
+   [Visual Studio Code]: <https://code.visualstudio.com/>
+   [Node.JS]: <http://nodejs.org>
+   [Bootstrap 5]: <https://getbootstrap.com//>
+   [jQuery]: <http://jquery.com>
+   [Express JS]: <http://expressjs.com>
