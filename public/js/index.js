@@ -293,19 +293,50 @@
         }
     }
 
-    document.getElementById('show-players').addEventListener('click', function() {
-        let remainingPlayerNames = players.map(player => player.username);
-        alert('Joueurs restants: ' + remainingPlayerNames.join(', '));
+    function usernameExists(username , players) {
+        return players.some(player => player.username.toLowerCase() === username.toLowerCase());
+    }
+
+    document.getElementById('eliminate-button').addEventListener('click', function() {
+        askWhoToEliminate(players);
     });
 
+    function askWhoToEliminate(players) {
 
-    socket.on('start game', (players) => {
+        console.log("Voici les joueurs :");
         players.forEach(player => {
             console.log(player.username);
         });
-        
+
+        let playerToEliminate = prompt("Qui voulez-vous éliminer ?");
+
+        let playerExists = usernameExists(playerToEliminate, players);
+        if (!playerExists) {
+            console.log("Ce joueur n'existe pas. Veuillez réessayer.");
+            return askWhoToEliminate(players);
+        }
+        players = players.filter(player => player.username !== playerToEliminate);
+        console.log(`${playerToEliminate} a été éliminé.`);
+
+        return players;
+    }
+
+
+    socket.on('start game', (players) => {
+        const playerListElement = document.getElementById('player-list');
+        playerListElement.innerHTML = '';
+
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = 'Liste des joueurs';
+        playerListElement.parentNode.insertBefore(titleElement, playerListElement);
+
+        players.forEach(player => {
+            const playerElement = document.createElement('div');
+            playerElement.textContent = player.username;
+            playerListElement.appendChild(playerElement);
+        });
+
         assignRoles(players, roles, words);
         updatePlayerRoles(players, player);
-
         startGame(players);
     });
